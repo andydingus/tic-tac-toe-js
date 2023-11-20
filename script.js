@@ -9,10 +9,27 @@
 // Element variables
 const container = document.getElementById('container');
 
+function placeX(e) {
+    if (e.type === 'mouseup'){
+        e.target.textContent = 'X';
+    }
+}
+
+function placeO(e) {
+    if (e.type === 'mouseup') {
+        e.target.textContent = 'O';
+    }
+}
+
 function createGrid() {
     for(let i = 0; i < 9; i++) {
+        // Create the grid blocks
         const gridBlock = document.createElement('div')
         gridBlock.className = 'grid-block';
+
+        // Place appropriate symbol when clicked
+        gridBlock.addEventListener('mouseup', placeO);
+
         container.appendChild(gridBlock);
     }
 }

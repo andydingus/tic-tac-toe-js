@@ -9,4 +9,7 @@
 
 .grid-block {
     border: 2px solid black;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 75px;
 }
