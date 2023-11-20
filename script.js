@@ -9,17 +9,22 @@
 // Element variables
 const container = document.getElementById('container');
 
-function placeX(e) {
-    if (e.type === 'mouseup'){
-        e.target.textContent = 'X';
-    }
-}
+// Player variables
+let playerOneTurn = true;
+let playerTwoTurn = false;
+let cpuTurn = false; // Plan for CPU later on
 
-function placeO(e) {
-    if (e.type === 'mouseup') {
-        e.target.textContent = 'O';
-    }
-}
+// function placeX(e) {
+//     if (e.type === 'mouseup'){
+//         e.target.textContent = 'X';
+//     }
+// }
+
+// function placeO(e) {
+//     if (e.type === 'mouseup') {
+//         e.target.textContent = 'O';
+//     }
+// }
 
 function createGrid() {
     for(let i = 0; i < 9; i++) {
@@ -28,7 +33,20 @@ function createGrid() {
         gridBlock.className = 'grid-block';
 
         // Place appropriate symbol when clicked
-        gridBlock.addEventListener('mouseup', placeO);
+        gridBlock.addEventListener('mouseup', function(e) {
+            if (playerOneTurn) {
+                e.target.textContent = 'X';
+                playerTwoTurn = true;
+                playerOneTurn = false;
+            } else if (playerTwoTurn) {
+                e.target.textContent = 'O';
+                playerTwoTurn = false;
+                playerOneTurn = true;
+            }
+        });
+        // gridBlock.addEventListener('mouseup', placeX);
+        // gridBlock.addEventListener('mouseup', placeO);
+        
 
         container.appendChild(gridBlock);
     }
