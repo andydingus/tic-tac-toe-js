@@ -30,18 +30,28 @@ function createGrid() {
     for(let i = 0; i < 9; i++) {
         // Create the grid blocks
         const gridBlock = document.createElement('div')
-        gridBlock.className = 'grid-block';
+        gridBlock.setAttribute('id', `block${i+1}`);
+
+        // Moved styles here since they're all IDs
+        gridBlock.style.border = '2px solid black';
+        gridBlock.style.textAlign = 'center';
+        gridBlock.style.paddingTop = '20px';
+        gridBlock.style.fontSize = '75px';
 
         // Place appropriate symbol when clicked
         gridBlock.addEventListener('mouseup', function(e) {
-            if (playerOneTurn) {
+            if (playerOneTurn && e.target.textContent === '') {
                 e.target.textContent = 'X';
+                checkForWin();
                 playerTwoTurn = true;
-                playerOneTurn = false;
-            } else if (playerTwoTurn) {
+                playerOneTurn = false;  
+            } else if (playerTwoTurn && e.target.textContent === '') {
                 e.target.textContent = 'O';
+                checkForWin();
                 playerTwoTurn = false;
                 playerOneTurn = true;
+            } else {
+                alert('Please click an empty block.');
             }
         });
         // gridBlock.addEventListener('mouseup', placeX);
@@ -52,4 +62,57 @@ function createGrid() {
     }
 }
 
+function checkForWin() {
+    if (container.hasChildNodes() === true) {
+        let gridBlocksList = Array.from(container.childNodes);
+        if (playerOneTurn) {
+            // Horizontal wins
+            if (gridBlocksList[0].textContent === 'X' && gridBlocksList[1].textContent === 'X' && gridBlocksList[2].textContent === 'X') {
+                console.log('Player 1 won!');
+            } else if (gridBlocksList[3].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[5].textContent === 'X') {
+                console.log('Player 1 won!');
+            } else if (gridBlocksList[6].textContent === 'X' && gridBlocksList[7].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
+                console.log('Player 1 won!');
+
+            // Vertical wins
+            } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[3].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
+                console.log('Player 1 won!');
+            } else if (gridBlocksList[1].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[7].textContent === 'X') {
+                console.log('Player 1 won!');
+            } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[5].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
+                console.log('Player 1 won!');
+
+            // Diagonal win
+            } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
+                console.log('Player 1 won!');
+            } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
+                console.log('Player 1 won!');
+            } 
+        } else if (playerTwoTurn) {
+            // Horizontal wins
+            if (gridBlocksList[0].textContent === 'O' && gridBlocksList[1].textContent === 'O' && gridBlocksList[2].textContent === 'O') {
+                console.log('Player 2 won!');
+            } else if (gridBlocksList[3].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[5].textContent === 'O') {
+                console.log('Player 2 won!');
+            } else if (gridBlocksList[6].textContent === 'O' && gridBlocksList[7].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
+                console.log('Player 2 won!');
+
+            // Vertical wins
+            } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[3].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
+                console.log('Player 2 won!');
+            } else if (gridBlocksList[1].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[7].textContent === 'O') {
+                console.log('Player 2 won!');
+            } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[5].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
+                console.log('Player 2 won!');
+
+            // Diagonal wins
+            } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
+                console.log('Player 2 won!');
+            } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
+                console.log('Player 2 won!');
+            }
+        }
+        
+    }
+}
 createGrid();
