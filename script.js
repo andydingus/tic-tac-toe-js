@@ -9,6 +9,7 @@
 // Element variables
 const container = document.getElementById('container');
 
+
 // Player variables
 let playerOneTurn = true;
 let playerTwoTurn = false;
@@ -25,6 +26,11 @@ let cpuTurn = false; // Plan for CPU later on
 //         e.target.textContent = 'O';
 //     }
 // }
+function resetGrid(list) {
+    for(let i = 0; i < list.length; i++) {
+       list[i].textContent = '';
+    }
+}
 
 function createGrid() {
     for(let i = 0; i < 9; i++) {
@@ -69,50 +75,65 @@ function checkForWin() {
             // Horizontal wins
             if (gridBlocksList[0].textContent === 'X' && gridBlocksList[1].textContent === 'X' && gridBlocksList[2].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[3].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[5].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[6].textContent === 'X' && gridBlocksList[7].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
 
             // Vertical wins
             } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[3].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[1].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[7].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[5].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
 
             // Diagonal win
             } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
                 console.log('Player 1 won!');
+                resetGrid(gridBlocksList);
             } 
         } else if (playerTwoTurn) {
             // Horizontal wins
             if (gridBlocksList[0].textContent === 'O' && gridBlocksList[1].textContent === 'O' && gridBlocksList[2].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[3].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[5].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[6].textContent === 'O' && gridBlocksList[7].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
 
             // Vertical wins
             } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[3].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[1].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[7].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[5].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
 
             // Diagonal wins
             } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
             } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
                 console.log('Player 2 won!');
+                resetGrid(gridBlocksList);
             }
         }
-        
     }
 }
 createGrid();
