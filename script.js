@@ -52,6 +52,14 @@ function removeAllChildNodes(parent) {
 //     }
 // }
 
+function updateInfo() {
+    if (playerOneTurn && reset.disabled === true) {
+        info.textContent = 'Player 1\'s turn';
+    } else if (playerTwoTurn && reset.disabled === true) {
+        info.textContent = 'Player 2\'s turn';
+    };
+}
+
 function createGrid() {
     if (container.hasChildNodes() === false) {
         for(let i = 0; i < 9; i++) {
@@ -69,16 +77,16 @@ function createGrid() {
             gridBlock.addEventListener('mouseup', function(e) {
                 if (playerOneTurn && e.target.textContent === '') { 
                     e.target.textContent = 'X';
-                    info.textContent = 'Player 1\'s turn';
                     checkForWin();
                     playerTwoTurn = true;
-                    playerOneTurn = false; 
+                    playerOneTurn = false;
+                    updateInfo(); 
                 } else if (playerTwoTurn && e.target.textContent === '') {
                     e.target.textContent = 'O';
-                    info.textContent = 'Player 2\'s turn';
                     checkForWin();
                     playerTwoTurn = false;
-                    playerOneTurn = true;   
+                    playerOneTurn = true; 
+                    updateInfo();  
                 } else {
                     alert('Please click an empty block.');
                 }
@@ -166,7 +174,7 @@ reset.addEventListener('click', function() {
     playerTwoTurn = false;
     reset.disabled = true;
     removeAllChildNodes(container);
-    info.textContent = `this is the text from being reset`   
+    info.textContent = `Game has reset. Player 1's turn!`   
     gridBlocksList.splice(0, gridBlocksList.length);
     createGrid();
 })
