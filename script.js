@@ -11,13 +11,19 @@ const container = document.getElementById('container');
 const info = document.getElementById('info');
 const reset = document.getElementById('reset');
 
-// Default state of Reset Button
+// Default states
 reset.disabled = true;
+let infoText = `Begin play! Player 1's turn!`
+info.textContent = infoText;
+
 
 // Player variables
 let playerOneTurn = true;
 let playerTwoTurn = false;
 let cpuTurn = false; // Plan for CPU later on
+
+
+
 
 // function placeX(e) {
 //     if (e.type === 'mouseup'){
@@ -63,12 +69,14 @@ function createGrid() {
                     e.target.textContent = 'X';
                     checkForWin();
                     playerTwoTurn = true;
-                    playerOneTurn = false;  
+                    playerOneTurn = false;
+                    info.textContent = `Player ${playerOneTurn ? '1' : '2'}'s turn`  
                 } else if (playerTwoTurn && e.target.textContent === '') {
                     e.target.textContent = 'O';
                     checkForWin();
                     playerTwoTurn = false;
                     playerOneTurn = true;
+                    info.textContent = `Player ${playerOneTurn ? '1' : '2'}'s turn` 
                 } else {
                     alert('Please click an empty block.');
                 }
@@ -98,12 +106,14 @@ function createGrid() {
                     e.target.textContent = 'X';
                     checkForWin();
                     playerTwoTurn = true;
-                    playerOneTurn = false;  
+                    playerOneTurn = false;
+                    info.textContent = `Player ${playerOneTurn ? '1' : '2'}'s turn`  
                 } else if (playerTwoTurn && e.target.textContent === '') {
                     e.target.textContent = 'O';
                     checkForWin();
                     playerTwoTurn = false;
                     playerOneTurn = true;
+                    info.textContent = `Player ${playerOneTurn ? '1' : '2'}'s turn`  
                 } else {
                     alert('Please click an empty block.');
                 }
@@ -190,6 +200,7 @@ reset.addEventListener('click', function() {
     playerOneTurn = true;
     playerTwoTurn = false;
     reset.disabled = true;
+    info.textContent = `Player ${playerOneTurn ? '1' : '2'}'s turn`   
     for(let i = 0; i < gridBlocksList.length; i++) {
         gridBlocksList[i].textContent = '';
     }
