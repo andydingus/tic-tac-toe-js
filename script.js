@@ -10,6 +10,7 @@
 const container = document.getElementById('container');
 const info = document.getElementById('info');
 const reset = document.getElementById('reset');
+let gridBlock = document.createElement('div');
 
 // Default states
 reset.disabled = true;
@@ -24,8 +25,6 @@ let cpuTurn = false; // Plan for CPU later on
 
 // Grid blocks list (to be resetted after every reset)
 let gridBlocksList = [];
-
-
 
 // function placeX(e) {
 //     if (e.type === 'mouseup'){
@@ -82,7 +81,7 @@ function createGrid() {
     if (container.hasChildNodes() === false) {
         for(let i = 0; i < 9; i++) {
             // Create the grid blocks
-            const gridBlock = document.createElement('div')
+            gridBlock = document.createElement('div')
             gridBlock.setAttribute('id', `block${i+1}`);
 
             // Moved styles here since they're all IDs
