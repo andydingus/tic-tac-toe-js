@@ -60,6 +60,24 @@ function updateInfo() {
     };
 }
 
+function placeSymbol(e) {
+    if (playerOneTurn && e.target.textContent === '' && e.button === 0) {
+        e.target.textContent = 'X';
+        checkForWin();
+        playerTwoTurn = true;
+        playerOneTurn = false;
+        updateInfo();
+    } else if (playerTwoTurn && e.target.textContent === '' && e.button === 0) {
+        e.target.textContent = 'O';
+        checkForWin();
+        playerTwoTurn = false;
+        playerOneTurn = true;
+        updateInfo();
+    } else {
+        alert('Please click an empty block.');
+    }
+}
+
 function createGrid() {
     if (container.hasChildNodes() === false) {
         for(let i = 0; i < 9; i++) {
@@ -74,23 +92,7 @@ function createGrid() {
             gridBlock.style.fontSize = '75px';
 
             // Place appropriate symbol when clicked
-            gridBlock.addEventListener('mouseup', function(e) {
-                if (playerOneTurn && e.target.textContent === '') { 
-                    e.target.textContent = 'X';
-                    checkForWin();
-                    playerTwoTurn = true;
-                    playerOneTurn = false;
-                    updateInfo(); 
-                } else if (playerTwoTurn && e.target.textContent === '') {
-                    e.target.textContent = 'O';
-                    checkForWin();
-                    playerTwoTurn = false;
-                    playerOneTurn = true; 
-                    updateInfo();  
-                } else {
-                    alert('Please click an empty block.');
-                }
-            });
+            gridBlock.addEventListener('mouseup', placeSymbol);
             // gridBlock.addEventListener('mouseup', placeX);
             // gridBlock.addEventListener('mouseup', placeO);
             
