@@ -8,6 +8,7 @@
 
 // Element variables
 // Part of main div
+let main = document.createElement('div');
 let gameTitle = document.createElement('h1');
 let container = document.createElement('div');
 let btnContainer = document.createElement('div');
@@ -22,16 +23,33 @@ let footer = document.createElement('footer');
 let gridBlock = document.createElement('div');
 
 // Giving IDs to select elements
+main.setAttribute('id', 'main');
 container.setAttribute('id', 'container');
 info.setAttribute('id', 'info');
 btnContainer.setAttribute('id', 'divButton');
 btnReset.setAttribute('id', 'reset');
 
+// Applying text to select elements
+gameTitle.textContent = 'Tic-Tac-Toe!';
+btnReset.textContent = 'Reset Game';
+footer.textContent = 'Made by andydingus';
 
-document.body.appendChild(container);
-document.body.appendChild(info);
+// Appending elements appropriately
+// Main
+document.body.appendChild(main);
+main.appendChild(gameTitle);
+main.appendChild(container);
+main.appendChild(info);
+
+// Reset button
+document.body.appendChild(btnContainer);
+btnContainer.appendChild(btnReset);
+
+// Footer
+document.body.appendChild(footer);
 
 // Default states
+let playerWhoStarts = 1; // Temp fix, remove once no longer needed
 reset.disabled = true;
 let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`
 info.textContent = infoText;
