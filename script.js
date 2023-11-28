@@ -14,7 +14,7 @@ let gridBlock = document.createElement('div');
 
 // Default states
 reset.disabled = true;
-let infoText = `Begin play! Player 1's turn!`
+let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`
 info.textContent = infoText;
 
 
@@ -27,6 +27,15 @@ let cpuTurn = false; // Plan for CPU later on
 
 // Grid blocks list (to be resetted after every reset)
 let gridBlocksList = [];
+
+// Changes accordingly depending on who starts
+if (playerWhoStarts === 1) {
+    playerOneTurn = true;
+    playerTwoTurn = false;
+} else if (playerWhoStarts === 2) {
+    playerOneTurn = false;
+    playerTwoTurn = true;
+}
 
 // function placeX(e) {
 //     if (e.type === 'mouseup'){
@@ -69,6 +78,7 @@ function placeSymbol(e) {
         e.target.textContent = 'X';
         xCount += 1;
         checkForWin();
+        checkForTie();
         playerTwoTurn = true;
         playerOneTurn = false;
         updateInfo();
@@ -76,6 +86,7 @@ function placeSymbol(e) {
         e.target.textContent = 'O';
         oCount += 1;
         checkForWin();
+        checkForTie();
         playerTwoTurn = false;
         playerOneTurn = true;
         updateInfo();
@@ -176,7 +187,11 @@ function checkForWin() {
         //     reset.disabled = false;
         // }
         }
-    } else if (xCount === 5 || oCount === 4) {
+    }
+}
+
+function checkForTie() {
+    if (xCount === 5 || oCount === 5) {
         info.textContent = 'It\'s a tie!';
         reset.disabled = false;
     }
@@ -191,10 +206,11 @@ reset.addEventListener('click', function() {
     oCount = 0;
     reset.disabled = true;
     removeAllChildNodes(container);
-    info.textContent = `Game has reset. Player 1's turn!`   
+    playerWhoStarts = +prompt('Who starts this time? (type 1 or 2)');
+    info.textContent = `Game has reset. Player ${playerWhoStarts}'s turn!`   
     gridBlocksList.splice(0, gridBlocksList.length);
     createGrid();
-})
+});
 
-console.log(testVar);
+
 
