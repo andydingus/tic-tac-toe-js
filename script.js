@@ -35,8 +35,12 @@ startFooter.textContent = 'Made by andydingus';
 startFooter.setAttribute('id', 'startFooter');
 
 // Event listeners for the buttons
-startPlayerOne.addEventListener('mouseup', startGame);
-startPlayerTwo.addEventListener('mouseup', startGame);
+startPlayerOne.addEventListener('mouseup', function() {
+    startGame(1);
+});
+startPlayerTwo.addEventListener('mouseup', function() {
+    startGame(2);
+});
 
 // // // // // // // // // 
 //  GAME PAGE ELEMENTS  //
@@ -69,7 +73,7 @@ btnReset.textContent = 'Reset Game';
 footer.textContent = 'Made by andydingus';
 
 // Default states
-let playerWhoStarts = 1; // Temp fix, remove once no longer needed
+let playerWhoStarts = 0;
 
 let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`
 info.textContent = infoText;
@@ -146,7 +150,7 @@ function initializeGame() {
     startBtnContainer.appendChild(startPlayerTwo);
 }
 
-function startGame() {
+function startGame(player) {
     // Remove the start page elements
     removeAllChildNodes(document.body);
 
@@ -165,8 +169,15 @@ function startGame() {
 
     // Footer
     document.body.appendChild(footer);
-
+    if (player === 1) {
+        return playerWhoStarts = 1;
+    } else if (player === 2) {
+        return playerWhoStarts = 2;
+    } else {
+        alert('An unknown error occured.');
+    }
     createGrid();
+    
 }
 
 function resetGame() {
