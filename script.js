@@ -7,10 +7,29 @@
 // 3) Reset grid once result is determined
 
 // Element variables
-const container = document.getElementById('container');
-const info = document.getElementById('info');
-const reset = document.getElementById('reset');
+// Part of main div
+let gameTitle = document.createElement('h1');
+let container = document.createElement('div');
+let btnContainer = document.createElement('div');
+let info = document.createElement('p');
+
+// Reset button
+let btnReset = document.createElement('button');
+
+// Footer
+let footer = document.createElement('footer');
+
 let gridBlock = document.createElement('div');
+
+// Giving IDs to select elements
+container.setAttribute('id', 'container');
+info.setAttribute('id', 'info');
+btnContainer.setAttribute('id', 'divButton');
+btnReset.setAttribute('id', 'reset');
+
+
+document.body.appendChild(container);
+document.body.appendChild(info);
 
 // Default states
 reset.disabled = true;
