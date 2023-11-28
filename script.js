@@ -65,6 +65,12 @@ function removeAllChildNodes(parent) {
 //     }
 // }
 
+function disableSymbolPlacement() {
+    for (let i = 0; i < gridBlocksList.length; i++) {
+        document.getElementById(`block${i+1}`).removeEventListener('mouseup',placeSymbol);
+    }
+}
+
 function updateInfo() {
     if (playerOneTurn && reset.disabled === true) {
         info.textContent = 'Player 1\'s turn';
@@ -126,62 +132,78 @@ function checkForWin() {
         if (gridBlocksList[0].textContent === 'X' && gridBlocksList[1].textContent === 'X' && gridBlocksList[2].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[3].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[5].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[6].textContent === 'X' && gridBlocksList[7].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
 
         // Vertical wins
         } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[3].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[1].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[7].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[5].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
 
         // Diagonal win
         } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         }
     } else if (playerTwoTurn) {
         // Horizontal wins
         if (gridBlocksList[0].textContent === 'O' && gridBlocksList[1].textContent === 'O' && gridBlocksList[2].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[3].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[5].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[6].textContent === 'O' && gridBlocksList[7].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
 
         // Vertical wins
         } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[3].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[1].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[7].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[5].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
 
         // Diagonal wins
         } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+            disableSymbolPlacement();
         // } else if (gridBlocksList.length === 9) {
         //     info.textContent = 'It\'s a tie!';
         //     reset.disabled = false;
