@@ -7,6 +7,40 @@
 // 3) Reset grid once result is determined
 
 // Element variables
+
+// // // // // // // // // //
+//    STARTING ELEMENTS    //
+// // // // // // // // // //
+const startDiv = document.createElement('div');
+const startBtnContainer = document.createElement('div');
+const startTitle = document.createElement('h1');
+const startText = document.createElement('p');
+const startPlayerOne = document.createElement('button');
+const startPlayerTwo = document.createElement('button');
+const startFooter = document.createElement('footer');
+
+startDiv.setAttribute('id','startDiv');
+startBtnContainer.setAttribute('id', 'startBtnContainer');
+
+startTitle.textContent = 'Tic-Tac-Toe!';
+startTitle.setAttribute('id','startTitle');
+
+startText.textContent = 'Who will go first?';
+startText.setAttribute('id', 'startText');
+
+startPlayerOne.textContent = 'Player 1 (X)';
+startPlayerTwo.textContent = 'Player 2 (O)';
+
+startFooter.textContent = 'Made by andydingus';
+startFooter.setAttribute('id', 'startFooter');
+
+// Event listeners for the buttons
+startPlayerOne.addEventListener('mouseup', startGame);
+startPlayerTwo.addEventListener('mouseup', startGame);
+
+// // // // // // // // // 
+//  GAME PAGE ELEMENTS  //
+// // // // // // // // //
 // Part of main div
 let main = document.createElement('div');
 let gameTitle = document.createElement('h1');
@@ -34,26 +68,11 @@ gameTitle.textContent = 'Tic-Tac-Toe!';
 btnReset.textContent = 'Reset Game';
 footer.textContent = 'Made by andydingus';
 
-// Appending elements appropriately
-// Main
-document.body.appendChild(main);
-main.appendChild(gameTitle);
-main.appendChild(container);
-main.appendChild(info);
-
-// Reset button
-document.body.appendChild(btnContainer);
-btnContainer.appendChild(btnReset);
-
-// Footer
-document.body.appendChild(footer);
-
 // Default states
 let playerWhoStarts = 1; // Temp fix, remove once no longer needed
-reset.disabled = true;
+
 let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`
 info.textContent = infoText;
-
 
 // Player variables
 let playerOneTurn = true;
@@ -74,33 +93,12 @@ if (playerWhoStarts === 1) {
     playerTwoTurn = true;
 }
 
-// function placeX(e) {
-//     if (e.type === 'mouseup'){
-//         e.target.textContent = 'X';
-//     }
-// }
-
-// function placeO(e) {
-//     if (e.type === 'mouseup') {
-//         e.target.textContent = 'O';
-//     }
-// }
-
-// window.onload = function() {
-//     alert('test');
-// };
 // Credit: https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
-
-// function resetGrid(list) {
-//     for(let i = 0; i < list.length; i++) {
-//        list[i].textContent = '';
-//     }
-// }
 
 function disableSymbolPlacement() {
     for (let i = 0; i < gridBlocksList.length; i++) {
@@ -136,6 +134,52 @@ function placeSymbol(e) {
     } else {
         alert('Please click an empty block.');
     }
+}
+
+function initializeGame() {
+    document.body.appendChild(startDiv);
+    document.body.appendChild(startFooter);
+    startDiv.appendChild(startTitle);
+    startDiv.appendChild(startText);
+    startDiv.appendChild(startBtnContainer);
+    startBtnContainer.appendChild(startPlayerOne);
+    startBtnContainer.appendChild(startPlayerTwo);
+}
+
+function startGame() {
+    // Remove the start page elements
+    removeAllChildNodes(document.body);
+
+    // Appending elements appropriately
+    // Main
+    document.body.appendChild(main);
+    main.appendChild(gameTitle);
+    main.appendChild(container);
+    main.appendChild(info);
+
+    // Reset button (button is disabled by default)
+    document.body.appendChild(btnContainer);
+    btnContainer.appendChild(btnReset);
+    reset.disabled = true;
+    reset.addEventListener('click', resetGame);
+
+    // Footer
+    document.body.appendChild(footer);
+
+    createGrid();
+}
+
+function resetGame() {
+    playerOneTurn = true;
+    playerTwoTurn = false;
+    xCount = 0;
+    oCount = 0;
+    reset.disabled = true;
+    removeAllChildNodes(container);
+    playerWhoStarts = +prompt('Who starts this time? (type 1 or 2)');
+    info.textContent = `Game has reset. Player ${playerWhoStarts}'s turn!`   
+    gridBlocksList.splice(0, gridBlocksList.length);
+    createGrid();
 }
 
 function createGrid() {
@@ -241,10 +285,6 @@ function checkForWin() {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
             disableSymbolPlacement();
-        // } else if (gridBlocksList.length === 9) {
-        //     info.textContent = 'It\'s a tie!';
-        //     reset.disabled = false;
-        // }
         }
     }
 }
@@ -256,20 +296,9 @@ function checkForTie() {
     }
 }
 
-createGrid();
+initializeGame();
 
-reset.addEventListener('click', function() {
-    playerOneTurn = true;
-    playerTwoTurn = false;
-    xCount = 0;
-    oCount = 0;
-    reset.disabled = true;
-    removeAllChildNodes(container);
-    playerWhoStarts = +prompt('Who starts this time? (type 1 or 2)');
-    info.textContent = `Game has reset. Player ${playerWhoStarts}'s turn!`   
-    gridBlocksList.splice(0, gridBlocksList.length);
-    createGrid();
-});
+
 
 
 

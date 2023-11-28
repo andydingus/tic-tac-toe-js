@@ -8,6 +8,32 @@ footer {
     margin: 50px;
 }
 
+#startFooter {
+    margin: 0;
+    font-size: 20px;
+}
+
+#startTitle {
+    font-size: 120px;
+    margin-bottom: 0;
+}
+
+#startText {
+    font-size: 30px;
+}
+
+#startDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 250px;
+}
+
+#startBtnContainer {
+    display: flex;
+    gap: 50px;
+}
+
 #main {
     display: flex;
     flex-direction: column;
