@@ -21,6 +21,8 @@ info.textContent = infoText;
 // Player variables
 let playerOneTurn = true;
 let playerTwoTurn = false;
+let xCount = 0;
+let oCount = 0;
 let cpuTurn = false; // Plan for CPU later on
 
 // Grid blocks list (to be resetted after every reset)
@@ -38,6 +40,9 @@ let gridBlocksList = [];
 //     }
 // }
 
+// window.onload = function() {
+//     alert('test');
+// };
 // Credit: https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -62,12 +67,14 @@ function updateInfo() {
 function placeSymbol(e) {
     if (playerOneTurn && e.target.textContent === '' && e.button === 0) {
         e.target.textContent = 'X';
+        xCount += 1;
         checkForWin();
         playerTwoTurn = true;
         playerOneTurn = false;
         updateInfo();
     } else if (playerTwoTurn && e.target.textContent === '' && e.button === 0) {
         e.target.textContent = 'O';
+        oCount += 1;
         checkForWin();
         playerTwoTurn = false;
         playerOneTurn = true;
@@ -97,8 +104,8 @@ function createGrid() {
             
 
             container.appendChild(gridBlock);
-            gridBlocksList = Array.from(container.childNodes);
         }
+        gridBlocksList = Array.from(container.childNodes);
     }
 }
 
@@ -133,7 +140,7 @@ function checkForWin() {
         } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
             info.textContent = `Player 1 won!`;
             reset.disabled = false;
-        } 
+        }
     } else if (playerTwoTurn) {
         // Horizontal wins
         if (gridBlocksList[0].textContent === 'O' && gridBlocksList[1].textContent === 'O' && gridBlocksList[2].textContent === 'O') {
@@ -164,7 +171,14 @@ function checkForWin() {
         } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
             info.textContent = `Player 2 won!`;
             reset.disabled = false;
+        // } else if (gridBlocksList.length === 9) {
+        //     info.textContent = 'It\'s a tie!';
+        //     reset.disabled = false;
+        // }
         }
+    } else if (xCount === 5 || oCount === 4) {
+        info.textContent = 'It\'s a tie!';
+        reset.disabled = false;
     }
 }
 
@@ -173,10 +187,14 @@ createGrid();
 reset.addEventListener('click', function() {
     playerOneTurn = true;
     playerTwoTurn = false;
+    xCount = 0;
+    oCount = 0;
     reset.disabled = true;
     removeAllChildNodes(container);
     info.textContent = `Game has reset. Player 1's turn!`   
     gridBlocksList.splice(0, gridBlocksList.length);
     createGrid();
 })
+
+console.log(testVar);
 
