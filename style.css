@@ -1,6 +1,8 @@
 /* Time to style this Tic-Tac-Toe game! */
 body {
     font-family: 'Pixelify Sans', sans-serif;
+    background: url(https://i.giphy.com/media/3o7buijTqhjxjbEqjK/giphy.webp);
+    background-size: cover;
 }
 
 footer {

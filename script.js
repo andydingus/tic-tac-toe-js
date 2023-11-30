@@ -6,6 +6,17 @@
 // 2) Check game condition for win/loss/tie
 // 3) Reset grid once result is determined
 
+// Player variables
+let playerOneTurn = false;
+let playerTwoTurn = false;
+let playerWhoStarts = 0;
+let xCount = 0;
+let oCount = 0;
+let cpuTurn = false; // Plan for CPU later on
+
+// Grid blocks list (to be resetted after every reset)
+let gridBlocksList = [];
+
 // Element variables
 
 // // // // // // // // // //
@@ -34,18 +45,8 @@ startPlayerTwo.textContent = 'Player 2 (O)';
 startFooter.textContent = 'Made by andydingus';
 startFooter.setAttribute('id', 'startFooter');
 
-// Player variables
-let playerOneTurn = false;
-let playerTwoTurn = false;
-let xCount = 0;
-let oCount = 0;
-let cpuTurn = false; // Plan for CPU later on
-
-// Grid blocks list (to be resetted after every reset)
-let gridBlocksList = [];
-
 // Event listeners for the buttons
-let playerWhoStarts = 0;
+
 startPlayerOne.addEventListener('mouseup', function() {
     playerWhoStarts = 1;
     startGame();
@@ -86,8 +87,7 @@ btnReset.textContent = 'Reset Game';
 footer.textContent = 'Made by andydingus';
 
 // Default states
-let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`
-info.textContent = infoText;
+
 
 
 
@@ -168,6 +168,9 @@ function startGame() {
     main.appendChild(gameTitle);
     main.appendChild(container);
     main.appendChild(info);
+
+    let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`;
+    info.textContent = infoText;    
 
     // Reset button (button is disabled by default)
     document.body.appendChild(btnContainer);
