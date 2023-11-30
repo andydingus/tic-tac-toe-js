@@ -124,6 +124,7 @@ function activateDarkOrLightMode() {
         document.body.style.backgroundColor = '#352F44';
         document.body.style.color = '#FAF0E6';
         startBtnDarkOrLightMode.textContent = 'Light Mode';
+        gameBtnDarkOrLightMode.textContent = 'Light Mode';
 
         // Grid styles
         container.style.boxShadow = '0 0 10px 10px #FAF0E6';
@@ -136,6 +137,7 @@ function activateDarkOrLightMode() {
         document.body.style.backgroundColor = '#FAF0E6';
         document.body.style.color = '#352F44';
         startBtnDarkOrLightMode.textContent = 'Dark Mode';
+        gameBtnDarkOrLightMode.textContent = 'Dark Mode';
 
         // Grid styles
         container.style.boxShadow = '0 0 10px 10px #352F44';

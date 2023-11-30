@@ -12,6 +12,20 @@ footer {
     text-align: center;
 }
 
+/* Button styles */
+button {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 20px;   
+}
+
+button:hover {
+    background-color: #B9B4C7;
+}
+
+button:active {
+    background-color: #B9B4C7;
+}
+
 /* Start Menu styles */
 
 #startFooterContainer {
@@ -89,3 +103,4 @@ footer {
 .dark {
     color: #FAF0E6;
 }
+
