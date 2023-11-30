@@ -14,11 +14,14 @@ let xCount = 0;
 let oCount = 0;
 let cpuTurn = false; // Plan for CPU later on
 
+// Dark/light mode variables
+let onDarkMode = false;
+let onLightMode = true;
+
 // Grid blocks list (to be resetted after every reset)
 let gridBlocksList = [];
 
 // Element variables
-
 // // // // // // // // // //
 //    STARTING ELEMENTS    //
 // // // // // // // // // //
@@ -28,7 +31,9 @@ const startTitle = document.createElement('h1');
 const startText = document.createElement('p');
 const startPlayerOne = document.createElement('button');
 const startPlayerTwo = document.createElement('button');
+const startFooterContainer = document.createElement('div');
 const startFooter = document.createElement('footer');
+const startBtnDarkMode = document.createElement('button');
 
 startDiv.setAttribute('id','startDiv');
 startBtnContainer.setAttribute('id', 'startBtnContainer');
@@ -42,11 +47,15 @@ startText.setAttribute('id', 'startText');
 startPlayerOne.textContent = 'Player 1 (X)';
 startPlayerTwo.textContent = 'Player 2 (O)';
 
+startFooterContainer.setAttribute('id', 'startFooterContainer');
 startFooter.textContent = 'Made by andydingus';
 startFooter.setAttribute('id', 'startFooter');
 
-// Event listeners for the buttons
+startBtnDarkMode.textContent = 'Dark Mode'; //Temp title, will be changed into a "lightswitch"
+startBtnDarkMode.setAttribute('class', 'no-stretch');
 
+
+// Event listeners for the buttons
 startPlayerOne.addEventListener('mouseup', function() {
     playerWhoStarts = 1;
     startGame();
@@ -55,6 +64,7 @@ startPlayerTwo.addEventListener('mouseup', function() {
     playerWhoStarts = 2;
     startGame();
 });
+startBtnDarkMode.addEventListener('mouseup', activateDarkOrLightMode);
 
 // // // // // // // // // 
 //  GAME PAGE ELEMENTS  //
@@ -86,11 +96,6 @@ gameTitle.textContent = 'Tic-Tac-Toe!';
 btnReset.textContent = 'Reset Game';
 footer.textContent = 'Made by andydingus';
 
-// Default states
-
-
-
-
 // Changes accordingly depending on who starts
 function checkPlayerTurn() {
     if (playerWhoStarts === 1) {
@@ -102,13 +107,47 @@ function checkPlayerTurn() {
     }
 }
 
-
 // Credit: https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+function activateDarkOrLightMode() {
+    if (onLightMode) {
+        document.body.style.backgroundColor = '#352F44';
+
+        // Ensures all of the font becomes readable...
+        // ...if on start menu
+        document.body.style.color = '#FAF0E6';
+        // ...and when during game
+        startBtnDarkMode.textContent = 'Light Mode';
+        onDarkMode = true;
+        onLightMode = false;
+    } else if (onDarkMode) {
+        document.body.style.backgroundColor = '#FAF0E6';
+
+        // Ensures all of the font becomes readable...
+        // ...if on start menu
+        // startDiv.style.color = '#352F44';
+        // startFooterContainer.style.color = '#352F44';
+        document.body.style.color = '#352F44';
+
+        // ...and when during game
+
+
+        startBtnDarkMode.textContent = 'Dark Mode';
+        onLightMode = true;
+        onDarkMode = false;
+    }
+}
+
+// function activateLightMode() {
+//     if (onDarkMode) {
+        
+//     }
+// }
 
 function disableSymbolPlacement() {
     for (let i = 0; i < gridBlocksList.length; i++) {
@@ -150,12 +189,14 @@ function placeSymbol(e) {
 
 function initializeGame() {
     document.body.appendChild(startDiv);
-    document.body.appendChild(startFooter);
+    document.body.appendChild(startFooterContainer);
     startDiv.appendChild(startTitle);
     startDiv.appendChild(startText);
     startDiv.appendChild(startBtnContainer);
     startBtnContainer.appendChild(startPlayerOne);
     startBtnContainer.appendChild(startPlayerTwo);
+    startFooterContainer.appendChild(startBtnDarkMode);
+    startFooterContainer.appendChild(startFooter);
 }
 
 function startGame() {
@@ -181,7 +222,7 @@ function startGame() {
     // Footer
     document.body.appendChild(footer);
     checkPlayerTurn();
-    createGrid();  
+    createGrid();
 }
 
 function resetGame() {

@@ -1,13 +1,22 @@
 /* Time to style this Tic-Tac-Toe game! */
 body {
     font-family: 'Pixelify Sans', sans-serif;
-    background: url(https://i.giphy.com/media/3o7buijTqhjxjbEqjK/giphy.webp);
-    background-size: cover;
+    /* background: url(https://i.giphy.com/media/3o7buijTqhjxjbEqjK/giphy.webp);
+    background-size: cover; */
+    background-color: #FAF0E6;
+    color: #352F44;
 }
 
 footer {
     text-align: center;
     margin: 50px;
+}
+
+#startFooterContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
 }
 
 #startFooter {
@@ -58,4 +67,14 @@ footer {
 #divButton {
     display: flex;
     justify-content: center;
+}
+
+/* Classes styles */
+/* Prevents button stretching if it's a flex item */
+.no-stretch {
+    align-self: center;
+}
+
+.dark {
+    color: #FAF0E6;
 }
