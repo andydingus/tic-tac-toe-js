@@ -33,7 +33,7 @@ const startPlayerOne = document.createElement('button');
 const startPlayerTwo = document.createElement('button');
 const startFooterContainer = document.createElement('div');
 const startFooter = document.createElement('footer');
-const startBtnDarkMode = document.createElement('button');
+const startBtnDarkOrLightMode = document.createElement('button');
 
 startDiv.setAttribute('id','startDiv');
 startBtnContainer.setAttribute('id', 'startBtnContainer');
@@ -51,9 +51,42 @@ startFooterContainer.setAttribute('id', 'startFooterContainer');
 startFooter.textContent = 'Made by andydingus';
 startFooter.setAttribute('id', 'startFooter');
 
-startBtnDarkMode.textContent = 'Dark Mode'; //Temp title, will be changed into a "lightswitch"
-startBtnDarkMode.setAttribute('class', 'no-stretch');
+startBtnDarkOrLightMode.textContent = 'Dark Mode'; //Temp title, will be changed into a "lightswitch"
+startBtnDarkOrLightMode.setAttribute('class', 'no-stretch');
 
+// // // // // // // // // 
+//  GAME PAGE ELEMENTS  //
+// // // // // // // // //
+// Part of main div
+const main = document.createElement('div');
+const gameTitle = document.createElement('h1');
+const container = document.createElement('div');
+const btnContainer = document.createElement('div');
+const info = document.createElement('p');
+const btnReset = document.createElement('button');
+const gameBtnDarkOrLightMode = document.createElement('button');
+const gameFooterContainer = document.createElement('div');
+const footer = document.createElement('footer');
+
+// Can't be const since it will be duplicated 
+let gridBlock = document.createElement('div');
+
+// Giving IDs to select elements
+main.setAttribute('id', 'main');
+container.setAttribute('id', 'container');
+info.setAttribute('id', 'info');
+btnContainer.setAttribute('id', 'divButton');
+gameFooterContainer.setAttribute('id', 'gameFooterContainer');
+btnReset.setAttribute('id', 'reset');
+
+// Classes to elements
+gameBtnDarkOrLightMode.setAttribute('class', 'no-stretch')
+
+// Applying text to select elements
+gameTitle.textContent = 'Tic-Tac-Toe!';
+btnReset.textContent = 'Reset Game';
+footer.textContent = 'Made by andydingus';
+gameBtnDarkOrLightMode.textContent = 'Dark Mode';
 
 // Event listeners for the buttons
 startPlayerOne.addEventListener('mouseup', function() {
@@ -64,37 +97,8 @@ startPlayerTwo.addEventListener('mouseup', function() {
     playerWhoStarts = 2;
     startGame();
 });
-startBtnDarkMode.addEventListener('mouseup', activateDarkOrLightMode);
-
-// // // // // // // // // 
-//  GAME PAGE ELEMENTS  //
-// // // // // // // // //
-// Part of main div
-let main = document.createElement('div');
-let gameTitle = document.createElement('h1');
-let container = document.createElement('div');
-let btnContainer = document.createElement('div');
-let info = document.createElement('p');
-
-// Reset button
-let btnReset = document.createElement('button');
-
-// Footer
-let footer = document.createElement('footer');
-
-let gridBlock = document.createElement('div');
-
-// Giving IDs to select elements
-main.setAttribute('id', 'main');
-container.setAttribute('id', 'container');
-info.setAttribute('id', 'info');
-btnContainer.setAttribute('id', 'divButton');
-btnReset.setAttribute('id', 'reset');
-
-// Applying text to select elements
-gameTitle.textContent = 'Tic-Tac-Toe!';
-btnReset.textContent = 'Reset Game';
-footer.textContent = 'Made by andydingus';
+startBtnDarkOrLightMode.addEventListener('mouseup', activateDarkOrLightMode);
+gameBtnDarkOrLightMode.addEventListener('mouseup', activateDarkOrLightMode);
 
 // Changes accordingly depending on who starts
 function checkPlayerTurn() {
@@ -115,29 +119,29 @@ function removeAllChildNodes(parent) {
 }
 
 function activateDarkOrLightMode() {
+    // Ensures all of the font becomes readable, whether it is dark or light mode
     if (onLightMode) {
         document.body.style.backgroundColor = '#352F44';
-
-        // Ensures all of the font becomes readable...
-        // ...if on start menu
         document.body.style.color = '#FAF0E6';
-        // ...and when during game
-        startBtnDarkMode.textContent = 'Light Mode';
+        startBtnDarkOrLightMode.textContent = 'Light Mode';
+
+        // Grid styles
+        container.style.boxShadow = '0 0 10px 10px #FAF0E6';
+        for (let i = 0; i < gridBlocksList.length; i++) {
+            document.getElementById(`block${i+1}`).style.border = '2px solid #FAF0E6';
+        }
         onDarkMode = true;
         onLightMode = false;
     } else if (onDarkMode) {
         document.body.style.backgroundColor = '#FAF0E6';
-
-        // Ensures all of the font becomes readable...
-        // ...if on start menu
-        // startDiv.style.color = '#352F44';
-        // startFooterContainer.style.color = '#352F44';
         document.body.style.color = '#352F44';
+        startBtnDarkOrLightMode.textContent = 'Dark Mode';
 
-        // ...and when during game
-
-
-        startBtnDarkMode.textContent = 'Dark Mode';
+        // Grid styles
+        container.style.boxShadow = '0 0 10px 10px #352F44';
+        for (let i = 0; i < gridBlocksList.length; i++) {
+            document.getElementById(`block${i+1}`).style.border = '2px solid #352F44';
+        }
         onLightMode = true;
         onDarkMode = false;
     }
@@ -182,8 +186,10 @@ function placeSymbol(e) {
         updateInfo();
     } else if (!playerOneTurn && !playerTwoTurn) {
         alert('Error in code; it is no one\'s turn?');
+    } else if (e.button !== 0) {
+        alert('Unknown click registered, please use only left click.');
     } else {
-        alert('Please click an empty block.');
+        alert('Please click an empty block.')
     }
 }
 
@@ -195,7 +201,7 @@ function initializeGame() {
     startDiv.appendChild(startBtnContainer);
     startBtnContainer.appendChild(startPlayerOne);
     startBtnContainer.appendChild(startPlayerTwo);
-    startFooterContainer.appendChild(startBtnDarkMode);
+    startFooterContainer.appendChild(startBtnDarkOrLightMode);
     startFooterContainer.appendChild(startFooter);
 }
 
@@ -210,17 +216,19 @@ function startGame() {
     main.appendChild(container);
     main.appendChild(info);
 
-    let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`;
-    info.textContent = infoText;    
-
     // Reset button (button is disabled by default)
-    document.body.appendChild(btnContainer);
+    main.appendChild(btnContainer);
     btnContainer.appendChild(btnReset);
     btnReset.disabled = true;
     btnReset.addEventListener('click', resetGame);
 
+    let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`;
+    info.textContent = infoText;    
+
     // Footer
-    document.body.appendChild(footer);
+    document.body.appendChild(gameFooterContainer);
+    gameFooterContainer.appendChild(gameBtnDarkOrLightMode);
+    gameFooterContainer.appendChild(footer);
     checkPlayerTurn();
     createGrid();
 }
