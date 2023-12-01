@@ -15,16 +15,50 @@ footer {
 /* Button styles */
 button {
     font-family: 'Pixelify Sans', sans-serif;
-    font-size: 20px;   
+    font-size: 20px;
 }
 
-button:hover {
+/* Credit: https://uiverse.io/Voxybuns/lucky-fireant-71 */
+button {
+    /* Variables */
+    /* --button_radius: 0.5em; */
+    --button_color: #FAF0E6;
+    --button_outline_color: #352F44;
+    font-weight: bold;
+    border: none;
+    /* border-radius: var(--button_radius); */
+    background: var(--button_outline_color);
+}
+  
+.button_top {
+display: block;
+box-sizing: border-box;
+border: 2px solid var(--button_outline_color);
+border-radius: var(--button_radius);
+padding: 0.75em 1.5em;
+background: var(--button_color);
+color: var(--button_outline_color);
+transform: translateY(-0.2em);
+transition: transform 0.1s ease;
+}
+  
+button:hover .button_top {
+/* Pull the button upwards when hovered */
+transform: translateY(-0.33em);
+}
+
+button:active .button_top {
+/* Push the button downwards when pressed */
+transform: translateY(0);
+}
+
+/* button:hover {
     background-color: #B9B4C7;
 }
 
 button:active {
     background-color: #B9B4C7;
-}
+} */
 
 /* Start Menu styles */
 
@@ -35,9 +69,13 @@ button:active {
     gap: 20px;
 }
 
+#startFooterContainer > button > span {
+    font-size: 15px;
+}
+
 #startFooter {
     margin: 0;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 #startTitle {
@@ -63,13 +101,13 @@ button:active {
 
 /* In-game styles */
 
-#main {
+#gameMain {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#container {
+#gameContainer {
     width: 400px;
     height: 400px;
     display: grid;
@@ -78,7 +116,7 @@ button:active {
     box-shadow: 0 0 10px 10px black;
 }
 
-#info {
+#gameInfo {
     font-size: 20px;
 }
 
