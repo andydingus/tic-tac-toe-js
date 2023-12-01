@@ -1,1 +1,0 @@
-let playerWhoStarts = +prompt('Who goes first? (type 1 or 2)');
