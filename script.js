@@ -136,6 +136,7 @@ function activateDarkOrLightMode() {
     if (onLightMode) {
         document.body.style.backgroundColor = '#352F44';
         document.body.style.color = '#FAF0E6';
+        document.body.style.transition = 'all 0.5s ease-in-out';
 
         // Change button styles
         startBtnDarkOrLightModeTop.textContent = 'Light Mode';
