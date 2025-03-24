@@ -9,7 +9,7 @@
 // Player variables
 let playerOneTurn = false;
 let playerTwoTurn = false;
-let playerWhoStarts = 0;
+let playerWhoStarts = null;
 let xCount = 0;
 let oCount = 0;
 let cpuTurn = false; // Plan for CPU later on
@@ -211,19 +211,20 @@ function placeSymbol(e) {
     }
 }
 
+function appendChildren(parent, children){
+    children.forEach(child => parent.appendChild(child));
+}
+
 function initializeGame() {
-    document.body.appendChild(startDiv);
-    document.body.appendChild(startFooterContainer);
-    startDiv.appendChild(startTitle);
-    startDiv.appendChild(startText);
-    startDiv.appendChild(startBtnContainer);
-    startBtnContainer.appendChild(startPlayerOne);
-    startBtnContainer.appendChild(startPlayerTwo);
-    startPlayerOne.appendChild(startPlayerOneTop);
-    startPlayerTwo.appendChild(startPlayerTwoTop);
-    startFooterContainer.appendChild(startBtnDarkOrLightMode);
-    startBtnDarkOrLightMode.appendChild(startBtnDarkOrLightModeTop);
-    startFooterContainer.appendChild(startFooter);
+    appendChildren(document.body, [startDiv, startFooterContainer]);
+    
+    appendChildren(startDiv, [startTitle, startText, startBtnContainer]);
+    appendChildren(startBtnContainer, [startPlayerOne, startPlayerTwo]);
+    appendChildren(startPlayerOne, [startPlayerOneTop]);
+    appendChildren(startPlayerTwo, [startPlayerTwoTop]);
+    
+    appendChildren(startFooterContainer, [startBtnDarkOrLightMode, startFooter]);
+    appendChildren(startBtnDarkOrLightMode, [startBtnDarkOrLightModeTop]);
 }
 
 function startGame() {
@@ -232,26 +233,23 @@ function startGame() {
 
     // Appending elements appropriately
     // Main
-    document.body.appendChild(gameMain);
-    gameMain.appendChild(gameTitle);
-    gameMain.appendChild(gameContainer);
-    gameMain.appendChild(gameInfo);
+    appendChildren(document.body, [gameMain, gameFooterContainer]);
+    appendChildren(gameMain, [gameTitle, gameContainer, gameInfo, gameBtnContainer]);
+    appendChildren(gameBtnContainer, [gameBtnReset]);
+    appendChildren(gameBtnReset, [gameBtnResetTop]);
 
-    // Reset button (button is disabled by default)
-    gameMain.appendChild(gameBtnContainer);
-    gameBtnContainer.appendChild(gameBtnReset);
-    gameBtnReset.appendChild(gameBtnResetTop);
+     // Set game info
+    let infoText = `Begin play! Player ${playerWhoStarts}'s turn!`;
+    gameInfo.textContent = infoText;
+
+    // Disable reset button initially and attach listener
     gameBtnReset.disabled = true;
     gameBtnReset.addEventListener('click', resetGame);
 
-    let infoText = `Begin play! Player ${playerWhoStarts}\'s turn!`;
-    gameInfo.textContent = infoText;    
+    // Append footer elements
+    appendChildren(gameFooterContainer, [gameBtnDarkOrLightMode, gameFooter]);
+    appendChildren(gameBtnDarkOrLightMode, [gameBtnDarkOrLightModeTop]);
 
-    // Footer
-    document.body.appendChild(gameFooterContainer);
-    gameFooterContainer.appendChild(gameBtnDarkOrLightMode);
-    gameBtnDarkOrLightMode.appendChild(gameBtnDarkOrLightModeTop);
-    gameFooterContainer.appendChild(gameFooter);
     checkPlayerTurn();
     createGrid();
 }
@@ -263,7 +261,16 @@ function resetGame() {
     oCount = 0;
     gameBtnReset.disabled = true;
     removeAllChildNodes(gameContainer);
-    playerWhoStarts = +prompt('Who starts this time? (type 1 or 2)');
+    // Input validation (ensuring no other number than 1 or 2)
+    let input = null;
+    while (input !== 1 && input !== 2) {
+        input = +prompt('Who starts this time? (type 1 or 2)');
+        if (input !== 1 && input !== 2) {
+            alert('Invalid input. Please type 1 or 2.');
+        }
+    }
+    playerWhoStarts = input;
+
     checkPlayerTurn();
     gameInfo.textContent = `Game has reset. Player ${playerWhoStarts}'s turn!`   
     gridBlocksList.splice(0, gridBlocksList.length);
@@ -296,83 +303,28 @@ function createGrid() {
 }
 
 function checkForWin() {    
-    if (playerOneTurn) {
-        // Horizontal wins
-        if (gridBlocksList[0].textContent === 'X' && gridBlocksList[1].textContent === 'X' && gridBlocksList[2].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[3].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[5].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[6].textContent === 'X' && gridBlocksList[7].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
+    const winningCombos = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+        [0, 4, 8], [2, 4, 6]             // Diagonals
+    ];
 
-        // Vertical wins
-        } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[3].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[1].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[7].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[5].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
+    const symbol = playerOneTurn ? 'X' : playerTwoTurn ? 'O' : null;
+    const player = playerOneTurn ? 1 : playerTwoTurn ? 2 : null;
 
-        // Diagonal win
-        } else if (gridBlocksList[0].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[8].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[2].textContent === 'X' && gridBlocksList[4].textContent === 'X' && gridBlocksList[6].textContent === 'X') {
-            gameInfo.textContent = `Player 1 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        }
-    } else if (playerTwoTurn) {
-        // Horizontal wins
-        if (gridBlocksList[0].textContent === 'O' && gridBlocksList[1].textContent === 'O' && gridBlocksList[2].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[3].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[5].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[6].textContent === 'O' && gridBlocksList[7].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
+    if (!symbol) return; // Guard clause
 
-        // Vertical wins
-        } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[3].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
+    for (let combo of winningCombos){
+        const [a,b,c] = combo;
+        if (
+            gridBlocksList[a].textContent === symbol &&
+            gridBlocksList[b].textContent === symbol &&
+            gridBlocksList[c].textContent === symbol
+        ) {
+            gameInfo.textContent = `Player ${player} won!`;
             gameBtnReset.disabled = false;
             disableSymbolPlacement();
-        } else if (gridBlocksList[1].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[7].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[5].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-
-        // Diagonal wins
-        } else if (gridBlocksList[0].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[8].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
-        } else if (gridBlocksList[2].textContent === 'O' && gridBlocksList[4].textContent === 'O' && gridBlocksList[6].textContent === 'O') {
-            gameInfo.textContent = `Player 2 won!`;
-            gameBtnReset.disabled = false;
-            disableSymbolPlacement();
+            return;
         }
     }
 }
